@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   get 'works/main'
   post 'works/action'
-  post 'works/back'
+  get 'works/back'
 
   #adminsにアクセスしたときの動き
   get 'admins/main'

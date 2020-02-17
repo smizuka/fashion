@@ -31,14 +31,14 @@
 
                 <% else %>
                     <a class="navbar-brand " href="#">
-                        野鳥アノテーションシステム
+                        ファッション分類
                     </a>
                 <% end %>
         </div>
         <div class="navbar-nav">
             <% if logged_in? %>
 
-                <%= link_to("登録情報変更", sessions_update_path, {class: "nav-item nav-link text-white h5"}) %>
+                <%#= link_to("登録情報変更", sessions_update_path, {class: "nav-item nav-link text-white h5"}) %>
 
                 <%= link_to logout_path,method: :delete do %>
                     <p class="nav-item nav-link text-white h5">
