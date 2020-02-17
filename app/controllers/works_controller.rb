@@ -24,6 +24,9 @@ class WorksController < ApplicationController
 
     @user_state = user_state[0]
     # binding.pry
+    puts "-------------------------------------------------"
+    print(@user_state)
+
   end
 
   #戻るをしたときの操作
