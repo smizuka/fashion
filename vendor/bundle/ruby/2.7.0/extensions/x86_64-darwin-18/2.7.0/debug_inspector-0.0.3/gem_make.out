@@ -1,0 +1,15 @@
+current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20200208-27663-1b8ahnw.rb extconf.rb
+creating Makefile
+
+current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.bundle
+
+current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.bundle ./.gem.20200208-27663-11s1nq2
