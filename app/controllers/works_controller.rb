@@ -17,15 +17,15 @@ class WorksController < ApplicationController
 
       else
         file_path = annotation.folder_name+"/"+annotation.path
-        file_path = "https://bard-annotation-data.s3-ap-northeast-1.amazonaws.com/"+ file_path
+        file_path = "http://118.27.2.176/~mizukami/"+ file_path
         user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
       end
     end
 
+    @count = user_state.length
+
     @user_state = user_state[0]
     # binding.pry
-    puts "-------------------------------------------------"
-    print(@user_state)
 
   end
 
@@ -77,7 +77,6 @@ class WorksController < ApplicationController
 
     end
 
-
-
   end
 end
+

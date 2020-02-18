@@ -1,10 +1,10 @@
-<%# if @count!=0 %>
+<% if @count!=0 %>
 
 <div class="row">
     <div class="col-10 offset-1">
         <div class="row mt-3">
             <div class="col-4 offset-1">
-                <%= image_tag @user_state[2] ,size: '300x500'%>
+                <%= image_tag @user_state[2] ,size: '300x455'%>
                 <p> <%= @user_state[5] %> </p>
             </div>
             <div class=" col-6 offset-1 mt-1">
@@ -109,14 +109,13 @@
     </div>
 </div>
 
-<%# else %>
-
-<!--     <div id='footer'>
+<% else %>
+    <div id='footer'>
             <div class="mt-2 ml-2">
-              <p class="text-default h5 mb-3">割り当てられている画像はありません</p>
+              <p class="text-default h5 mb-3">画像はありません</p>
             </div>
-    </div> -->
-<%# end %>
+    </div>
+<% end %>
 
 
 
