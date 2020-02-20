@@ -55,15 +55,22 @@ class WorksController < ApplicationController
   #戻るをしたときの操作
   def back
 
-    edit = Edited.where(user_id: current_user.id)
+    # binding.pry
+    # edits = Edited.where(user_id: current_user.id)
+    # annotations = Annotation.where(state: "working")
+    annotations = Annotation.where(state: "working").or(Annotation.where(state: "end"))
+    # if annotations.length !=1 || annotations == nil
 
-    if edit.length != 1 || edit == nil
-      redirect_to works_main_path
+    if annotations[-1] != nil
+      annotations[-1].update_attribute(:state, "unassigned")
+      redirect_to works_annotation_path
     else
-      edit[-1].destroy
-      redirect_to works_main_path
+      redirect_to works_annotation_path
     end
-
+    #   binding.pry
+    #   annotations[-1].update_attribute(:state, "unassigned")
+    #   redirect_to works_annotation_path
+    # end
   end
 
   def trim

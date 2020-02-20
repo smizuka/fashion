@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'works/main'
   post 'works/action'
   post 'works/trim'
-  get 'works/back'
+  post 'works/back'
   get 'works/annotation'
 
   #adminsにアクセスしたときの動き
