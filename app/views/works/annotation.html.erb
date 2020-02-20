@@ -1,0 +1,477 @@
+<style>
+div#header {
+    position: fixed;
+    top: 0;
+    background: #0008;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+}
+div#footer {
+    position: fixed;
+    bottom: 0;
+    background: #0008;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+}
+/*div#contextmenu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+}*/
+
+</style>
+
+<% if @count!=0 %>
+<div id='vue-wrap'>
+    <app ref='main'>
+        <div class='hoge'></div>
+    </app>
+</div>
+
+<script>
+
+// use string template to use camlecase attribute name
+// see https://github.com/vuejs/vue/issues/4212
+Vue.component('app', {
+    template: `
+        <div>
+            <svg :viewBox='viewBox' :width='svg.w' :height='svg.h'
+                v-on:mouseup='mouseUp'
+                v-on:mousemove='mouseMove'
+                v-on:click='click'
+                v-on:contextmenu='contextMenu'
+                v-on:wheel='wheel'>
+                <image x='0' y='0' :width='image.w' :height='image.h' :href='imagePath' style='pointer-ecents: none;'/>
+                <rect :x='view.x' :y='view.y' :width='view.w' :height='view.h' fill='#0000'
+                    v-on:mouseup='mouseUp'
+                    v-on:mousedown='mouseDown($event, -1)'/>
+                <rect :x='Math.min(rect.sx, rect.tx)'
+                      :y='Math.min(rect.sy, rect.ty)'
+                      v-on:mousedown='mouseDown($event, 0)'
+                      v-on:mouseup='mouseUp'
+                      cursor='move'
+                      :width='Math.abs(rect.tx-rect.sx)'
+                      :height='Math.abs(rect.ty-rect.sy)' stroke='red' fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 5)'
+                    v-on:mouseup='mouseUp'
+                    cursor='n-resize'
+                    :cx='(rect.sx+rect.tx)/2'
+                    :cy='rect.sy'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 6)'
+                    v-on:mouseup='mouseUp'
+                    cursor='e-resize'
+                    :cx='rect.tx'
+                    :cy='(rect.sy+rect.ty)/2'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 7)'
+                    v-on:mouseup='mouseUp'
+                    cursor='s-resize'
+                    :cx='(rect.sx+rect.tx)/2'
+                    :cy='rect.ty'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 8)'
+                    v-on:mouseup='mouseUp'
+                    cursor='w-resize'
+                    :cx='rect.sx'
+                    :cy='(rect.sy+rect.ty)/2'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 1)'
+                    v-on:mouseup='mouseUp'
+                    cursor='nw-resize'
+                    :cx='rect.sx'
+                    :cy='rect.sy'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 2)'
+                    v-on:mouseup='mouseUp'
+                    cursor='se-resize'
+                    :cx='rect.tx'
+                    :cy='rect.ty'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 3)'
+                    v-on:mouseup='mouseUp'
+                    cursor='ne-resize'
+                    :cx='rect.tx'
+                    :cy='rect.sy'
+                    r='4'
+                    fill='#0000'/>
+                <circle
+                    v-on:mousedown='mouseDown($event, 4)'
+                    v-on:mouseup='mouseUp'
+                    cursor='sw-resize'
+                    :cx='rect.sx'
+                    :cy='rect.ty'
+                    r='4'
+                    fill='#0000'/>
+            </svg>
+            <div id='contextmenu' ref='contextmenu' v-bind:style="{position: 'fixed', visibility: ctxmenu.visibility, left: ctxmenu.x+'px', top: ctxmenu.y+'px'}">
+            </div>
+            <div id='footer'>
+                <div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <div class="row ml-3">
+                                <input class='btn border-default mb-2 mr-2' type='button' value='1つ前に戻る' onclick="onClickBack()">
+                                <input class='btn border-default mb-2 mr-2' type='button' value='初期位置に戻る' onclick="onClickInit()" >
+                                <input class='btn btn-primary mb-2 mr-2' type='button' value='決定(Z)' @click="type='b'" onclick="onClick2('b')">
+                                <input class='btn btn-primary mb-2' type='button' value='PASS(X)' @click="type='p'" onclick="onClick2('p')">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div> フォルダ名 : {{ currentFileName[0] }}</div>
+                            <div> ファイル名 : {{ currentFileName[1] }}</div>
+                            <div> 次の画像 : {{ currentFileName[2] }}</div>
+                            <div> 終了 : {{DataNum[0]}} --- 全画像数 : {{DataNum[1]}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `,
+    data: function() {
+        return {
+            mouse: {x: 0, y: 0, on: false, sx: 0, sy: 0, dsx: 0, dsy: 0, dtx: 0, dty: 0, svx: 0, svy: 0, dvx: 0, dvy: 0, type: 0},
+            rect:  {sx: 0, sy: 0, tx: 0, ty: 0},
+            view:  {x: 0, y: 0, w: 1000, h: 1000},
+            image: {w: 1000, h: 1000},
+            svg:   {w: 1000, h: 1000},
+            imagePath: '',
+            type: 'u',
+            userID: 'unknown',
+            progress: 20,
+            currentFileName: '',
+            DataNum: '',
+            ctxmenu: {visibility: 'hidden', x: 0, y: 0},
+        }
+    },
+    computed: {
+        viewBox: function() {
+            return this.view.x + ' ' + this.view.y + ' ' + this.view.w + ' ' + this.view.h;
+        },
+        mousev: function() {
+            return {
+                x: this.view.x + this.mouse.x / this.svg.w * this.view.w,
+                y: this.view.y + this.mouse.y / this.svg.h * this.view.h
+            }
+        },
+    },
+    watch: {
+    },
+    mounted: function() {
+        // var url = new URL(window.location.href);
+        // var imagePath = url.searchParams.get("imagepath");
+        // var rect = url.searchParams.get("rect").split(",");
+        this.svg.w = window.innerWidth;
+        this.svg.h = window.innerHeight;
+    },
+    methods: {
+        loadImage: function(imagePath) {
+            var img = new Image();
+            var hoge = this;
+            img.onload = function() {
+                hoge.imagePath = imagePath;
+                hoge.image.w = this.width;
+                hoge.image.h = this.height;
+                hoge.init();
+            }
+
+            img.src = imagePath;
+
+        },
+        init: function() {
+            var zoom = 1;
+            var x = Math.min(this.rect.sx, this.rect.tx);
+            var y = Math.min(this.rect.sy, this.rect.ty);
+            var w = Math.abs(this.rect.tx - this.rect.sx);
+            var h = Math.abs(this.rect.ty - this.rect.sy);
+            this.view = {
+                x: x + w/2 - this.svg.w/2/zoom,
+                y: y + h/2 - this.svg.h/2/zoom,
+                w: this.svg.w/zoom,
+                h: this.svg.h/zoom,
+            }
+        },
+        wheel: function(event) {
+            var vmx = this.mousev.x;
+            var vmy = this.mousev.y;
+            var zoom = 1.5;
+            if(event.deltaY < 0){
+                zoom = 1.0/zoom;
+            }
+            this.view.x = vmx + (this.view.x - vmx)*zoom;
+            this.view.y = vmy + (this.view.y - vmy)*zoom;
+            this.view.w = this.view.w*zoom;
+            this.view.h = this.view.w*this.svg.h/this.svg.w;
+            this.view.w = this.view.w;
+        },
+        contextMenu: function(event) {
+            event.preventDefault();
+            // console.log("this.mouse",this.mouse)
+            // this.$refs['contextmenu'].style.visibility = 'visible';
+            // this.$refs['contextmenu'].style.left = this.mouse.x;
+            // this.$refs['contextmenu'].style.top = this.mouse.y;
+            this.ctxmenu.visibility = 'visible';
+            this.ctxmenu.x = this.mouse.x;
+            this.ctxmenu.y = this.mouse.y;
+        },
+        click: function(event) {
+            // this.$refs['contextmenu'].style.visibility = 'hidden';
+            this.ctxmenu.visibility = 'hidden';
+        },
+        mouseDown: function(event, type) {
+            if(event.which !== 1) return;
+            this.mouse.on = true;
+            this.mouse.sx = this.mousev.x;
+            this.mouse.sy = this.mousev.y;
+            this.mouse.dsx = this.rect.sx - this.mousev.x;
+            this.mouse.dsy = this.rect.sy - this.mousev.y;
+            this.mouse.dtx = this.rect.tx - this.mousev.x;
+            this.mouse.dty = this.rect.ty - this.mousev.y;
+            this.mouse.svx = this.view.x;
+            this.mouse.svy = this.view.y;
+            this.mouse.dvx = this.mouse.x;
+            this.mouse.dvy = this.mouse.y;
+            this.mouse.type = type;
+        },
+        mouseUp: function(event) {
+            this.mouse.on = false;
+        },
+        mouseMove: function(event) {
+            this.mouse.x = event.clientX - event.currentTarget.getBoundingClientRect().left;
+            this.mouse.y = event.clientY - event.currentTarget.getBoundingClientRect().top;
+            if(this.mouse.on){
+                if(this.mouse.type == -1){
+                    var dvx = (this.mouse.dvx - this.mouse.x)/this.svg.w*this.view.w;
+                    var dvy = (this.mouse.dvy - this.mouse.y)/this.svg.h*this.view.h;
+                    this.view.x = this.mouse.svx + dvx;
+                    this.view.y = this.mouse.svy + dvy;
+                }
+                if(this.mouse.type == 0){
+                    this.rect.sx = parseInt(this.mousev.x + this.mouse.dsx);
+                    this.rect.sy = parseInt(this.mousev.y + this.mouse.dsy);
+                    this.rect.tx = parseInt(this.mousev.x + this.mouse.dtx);
+                    this.rect.ty = parseInt(this.mousev.y + this.mouse.dty);
+                }
+                if(this.mouse.type == 1){
+                    this.rect.sx = parseInt(this.mousev.x + this.mouse.dsx);
+                    this.rect.sy = parseInt(this.mousev.y + this.mouse.dsy);
+                }
+                if(this.mouse.type == 2){
+                    this.rect.tx = parseInt(this.mousev.x + this.mouse.dtx);
+                    this.rect.ty = parseInt(this.mousev.y + this.mouse.dty);
+                }
+                if(this.mouse.type == 3){
+                    this.rect.tx = parseInt(this.mousev.x + this.mouse.dtx);
+                    this.rect.sy = parseInt(this.mousev.y + this.mouse.dsy);
+                }
+                if(this.mouse.type == 4){
+                    this.rect.sx = parseInt(this.mousev.x + this.mouse.dsx);
+                    this.rect.ty = parseInt(this.mousev.y + this.mouse.dty);
+                }
+                if(this.mouse.type == 5){
+                    this.rect.sy = parseInt(this.mousev.y + this.mouse.dsy);
+                }
+                if(this.mouse.type == 6){
+                    this.rect.tx = parseInt(this.mousev.x + this.mouse.dtx);
+                }
+                if(this.mouse.type == 7){
+                    this.rect.ty = parseInt(this.mousev.y + this.mouse.dty);
+                }
+                if(this.mouse.type == 8){
+                    this.rect.sx = parseInt(this.mousev.x + this.mouse.dsx);
+                }
+            }
+        },
+    },
+});
+// let app = new Vue({
+var app = new Vue({
+    el: "#vue-wrap",
+    methods: {
+        setImagePath: function(imagePath) {
+            this.$refs.main.loadImage(imagePath);
+        },
+        getRect: function(imagePath) {
+            var sx = this.$refs.main.rect.sx;
+            var sy = this.$refs.main.rect.sy;
+            var tx = this.$refs.main.rect.tx;
+            var ty = this.$refs.main.rect.ty;
+            return [Math.min(sx, tx), Math.min(sy, ty), Math.abs(sx-tx), Math.abs(sy-ty)];
+        },
+        setRect: function(x, y, w, h) {
+            this.$refs.main.rect.sx = x;
+            this.$refs.main.rect.sy = y;
+            this.$refs.main.rect.tx = x+w;
+            this.$refs.main.rect.ty = y+h;
+            this.$refs.main.init();
+        },
+        getType: function() {
+            return this.$refs.main.type;
+        },
+        setUserName: function(name) {
+            this.$refs.main.userID = name;
+        },
+        setFileName: function(filename) {
+            this.$refs.main.currentFileName = filename;
+        },
+        setDataNum: function(DataNum) {
+            this.$refs.main.DataNum = DataNum;
+        },
+        setProgress: function(progress) {
+            // this.$refs.main.rect.userID = progress;
+            this.$refs.main.progress = progress;
+        },
+    },
+});
+
+
+
+
+function execPost(action, data) {
+ // フォームの生成
+ var form = document.createElement("form");
+ form.setAttribute("action", action);
+ form.setAttribute("method", "post");
+ form.style.display = "none";
+ document.body.appendChild(form);
+ // パラメタの設定
+ if (data !== undefined) {
+  for (var paramName in data) {
+   var input = document.createElement('input');
+   input.setAttribute('type', 'hidden');
+   input.setAttribute('name', paramName);
+   input.setAttribute('value', data[paramName]);
+   form.appendChild(input);
+  }
+ }
+ // submit
+ form.submit();
+}
+
+function backPicture(action, data) {
+ // フォームの生成
+ var form = document.createElement("form");
+ form.setAttribute("action", action);
+ form.setAttribute("method", "post");
+ form.style.display = "none";
+ document.body.appendChild(form);
+ // パラメタの設定
+ if (data !== undefined) {
+  for (var paramName in data) {
+   var input = document.createElement('input');
+   input.setAttribute('type', 'hidden');
+   input.setAttribute('name', paramName);
+   input.setAttribute('value', data[paramName]);
+   form.appendChild(input);
+  }
+ }
+ // submit
+ form.submit();
+}
+
+//アノテーションID
+var id = <%= @user_state[0] %>;
+var userId = <%= @user_state[1] %>;
+//ローカルの場合
+// var path = '/assets/'+;
+var path = `<%= @user_state[2] %>`;
+var info = [<%= @user_state[3][0..-3] %>];
+
+// console.log("id", id);
+var folder = `<%= @user_state[4]%>`;
+var file = `<%= @user_state[5]%>`;
+var next = `<%= @user_state[6]%>`;
+var fileData = [folder, file, next];
+// var data_num = [finish, unfinish];
+var folder_file = folder+"/"+file
+
+app.setImagePath(path);
+app.setRect(info[0],info[1],info[2], info[3]);
+app.setUserName('None');
+app.setFileName(fileData);
+// app.setDataNum(data_num);
+
+//該当するキーボードを押した時の挙動
+document.addEventListener('keydown', function(e) {
+    // console.log(e.code);
+    var type = "";
+    switch(e.code){
+    // 決定の場合
+    case 'KeyZ':
+        type = 'b';
+        break;
+    // パスの場合
+    case 'KeyX':
+        type = 'p';
+        break;
+    default :
+        return;
+    }
+
+    app.$refs.main.type = type;
+    if(app.$refs.main.type!='p'){
+        var pos = app.getRect(path);
+    }else{
+        var pos = info;
+    }
+    var results = {id: id, user_id: userId, path: folder_file, position: pos, category: app.$refs.main.type};
+
+    execPost("trim", results)
+});
+
+//ボタンを押したときの動作
+function onClick2(type) {
+
+    if(type!='p'){
+        var pos = app.getRect(path);
+    }else{
+        var pos = info;
+    }
+
+    var results = {id: id, user_id: userId, path: folder_file, position: pos, category: type};
+
+    execPost("trim", results)
+}
+
+//バックボタンを押したときの挙動
+function onClickBack(){
+    var results = {user_id: userId, annotation_id: id};
+    backPicture("back", results);
+}
+
+//initボタンを押した時の挙動
+function onClickInit(){
+    app.setRect(info[0],info[1],info[2], info[3]);
+}
+
+
+</script>
+
+<% else %>
+    <div id='footer'>
+        <div class="mt-2 ml-2">
+          <p class="text-default h5 mb-3">割り当てられている画像はありません</p>
+        </div>
+    </div>
+<% end %>
+
+
+
+
+

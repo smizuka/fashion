@@ -37,11 +37,12 @@
         </div>
         <div class="navbar-nav">
             <% if logged_in? %>
+                <%= link_to("８分類", works_main_path, {class: "nav-item nav-link text-white btn btn-outline-secondary h5"}) %>
 
-                <%#= link_to("登録情報変更", sessions_update_path, {class: "nav-item nav-link text-white h5"}) %>
+                <%= link_to("枠アノテーション", works_annotation_path, {class: "ml-2 nav-item nav-link text-white btn btn-outline-secondary h5"}) %>
 
                 <%= link_to logout_path,method: :delete do %>
-                    <p class="nav-item nav-link text-white h5">
+                    <p class="ml-2 nav-item nav-link text-white btn btn-outline-secondary h5">
                         ログアウト
                     </p>
                 <% end %>

@@ -5,7 +5,7 @@ class WorksController < ApplicationController
   def main
 
     user_state=[]
-    annotations = Annotation.all
+    annotations = Annotation.where(state: "working")
     #そのユーザーが取得した画像だけを取り出す
     edited = Edited.where(user_id: current_user.id)
     #annotaionのidだけを取り出す。
@@ -29,6 +29,29 @@ class WorksController < ApplicationController
 
   end
 
+  def annotation
+
+    # user_state=[]
+    annotations = Annotation.where(state: "unassigned")
+
+    #working状態の画像の数を取得。viewファイルの表示・非表示に関わる
+    @count = annotations.count
+
+    #userの情報を配列に入れる(@countが0のときはerrorになるかもしれないので除外)
+    if @count != 0
+        #フォルダ名とファイル名を結合して、画像pathを取得する
+        file_path =annotations[0].folder_name+"/"+annotations[0].path
+        file_path = "http://118.27.2.176/~mizukami/"+ file_path
+        #
+        (@count == 1) ? ( next_file = "なし" ) : ( next_file =annotations[1].path)
+
+         @user_state = [annotations[0].id, current_user.id, file_path,annotations[0].information,annotations[0].folder_name,annotations[0].path, next_file]
+    else
+      @user_state = []
+    end
+
+  end
+
   #戻るをしたときの操作
   def back
 
@@ -41,6 +64,20 @@ class WorksController < ApplicationController
       redirect_to works_main_path
     end
 
+  end
+
+  def trim
+
+    annotation = Annotation.find(params[:id])
+    #annotationを作業状態にする
+    if params[:category]== "p"
+      #endのものは８分類の際に表示されないようにする
+      annotation.update_attribute(:state, "end")
+    else
+      annotation.update_attribute(:state, "working")
+    end
+
+    redirect_to works_annotation_path
   end
 
   #アノテーションされたあとの結果
