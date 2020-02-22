@@ -15,6 +15,7 @@ class WorksController < ApplicationController
 
       if edited_annotation_id.include?(annotation.id)
 
+
       else
         file_path = annotation.folder_name+"/"+annotation.path
         file_path = "http://118.27.2.176/~mizukami/"+ file_path
@@ -45,21 +46,20 @@ class WorksController < ApplicationController
         #
         (@count == 1) ? ( next_file = "なし" ) : ( next_file =annotations[1].path)
 
-         @user_state = [annotations[0].id, current_user.id, file_path,annotations[0].information,annotations[0].folder_name,annotations[0].path, next_file]
+        informations = annotations[0].information.split(",")[0..3].join(",")
+
+        @user_state = [annotations[0].id, current_user.id, file_path,informations,annotations[0].folder_name,annotations[0].path, next_file]
     else
       @user_state = []
     end
 
   end
 
-  #戻るをしたときの操作
-  def back
+  #枠決めで戻るをしたときの操作
+  def annoBack
 
-    # binding.pry
-    # edits = Edited.where(user_id: current_user.id)
-    # annotations = Annotation.where(state: "working")
+    #枠が決定したものとパスしたものを取り出す。
     annotations = Annotation.where(state: "working").or(Annotation.where(state: "end"))
-    # if annotations.length !=1 || annotations == nil
 
     if annotations[-1] != nil
       annotations[-1].update_attribute(:state, "unassigned")
@@ -67,21 +67,34 @@ class WorksController < ApplicationController
     else
       redirect_to works_annotation_path
     end
-    #   binding.pry
-    #   annotations[-1].update_attribute(:state, "unassigned")
-    #   redirect_to works_annotation_path
-    # end
+
   end
+
+  #８分類でバックをしたとき
+  def mainBack
+
+    editeds = Edited.where(user_id: current_user.id)
+
+    if editeds[-1] != nil
+      editeds[-1].destroy
+      redirect_to works_main_path
+    else
+      redirect_to works_main_path
+    end
+  end
+
 
   def trim
 
     annotation = Annotation.find(params[:id])
+
     #annotationを作業状態にする
     if params[:category]== "p"
       #endのものは８分類の際に表示されないようにする
       annotation.update_attribute(:state, "end")
     else
       annotation.update_attribute(:state, "working")
+      annotation.update_attribute(:information, params[:position])
     end
 
     redirect_to works_annotation_path
