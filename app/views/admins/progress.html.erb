@@ -21,8 +21,9 @@
    <div class="tab-pane" id="progress"> -->
       <div class="row">
         <div class="col-10 offset-1">
-          <%= link_to("すべての結果を出力", admins_post_path(format: :csv), {class: "btn btn-primary mt-3"}) %>
-          <%= link_to("結果の平均を出力", admins_avg_path(format: :csv), {class: "btn btn-primary mt-3"}) %>
+          <%= link_to("８分類の結果を出力", admins_post_path(format: :csv), {class: "btn btn-primary mt-3"}) %>
+          <%= link_to("枠アノの結果を出力", admins_post2_path(format: :csv), {class: "btn btn-primary mt-3"}) %>
+          <%#= link_to("を出力", admins_avg_path(format: :csv), {class: "btn btn-primary mt-3"}) %>
         </div>
       </div>
       <% @progress.each_with_index do |pro, i| %>

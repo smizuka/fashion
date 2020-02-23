@@ -190,9 +190,29 @@ class AdminsController < ApplicationController
         send_posts_csv(@edited, "posts.csv")
       end
     end
+  end
 
 
+  #枠アノテーションの結果を出力する
+  def post2
+    #admin以外のユーザーを取得する
+    # users = User.where.not(user_type: "admin")
+    annotations = Annotation.where(state: "working")
 
+    @edited =[]
+    for annotation in annotations
+
+      path = [annotation.folder_name,annotation.path].join("/")
+      @edited.push(["none", path, annotation.information])
+    end
+
+    #生データ
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_posts_csv(@edited, "posts2.csv")
+      end
+    end
   end
 
   #登録したファイルを削除する
@@ -263,8 +283,6 @@ class AdminsController < ApplicationController
         @edited.push([user.login_id, edited.path, edited.information])
       end
     end
-
-    binding.pry
 
     #作業済みの画像のデータを取得する
     # @edited =[]

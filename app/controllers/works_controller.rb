@@ -2,8 +2,8 @@ class WorksController < ApplicationController
 
   protect_from_forgery except: :search # searchアクションを除外
 
+  #８分類するときの関数
   def main
-
     user_state=[]
     annotations = Annotation.where(state: "working")
     #そのユーザーが取得した画像だけを取り出す
@@ -14,7 +14,6 @@ class WorksController < ApplicationController
     for annotation in annotations
 
       if edited_annotation_id.include?(annotation.id)
-
 
       else
         file_path = annotation.folder_name+"/"+annotation.path
@@ -30,6 +29,7 @@ class WorksController < ApplicationController
 
   end
 
+   #枠アノテーションをするときの関数
   def annotation
 
     # user_state=[]
@@ -63,6 +63,7 @@ class WorksController < ApplicationController
 
     if annotations[-1] != nil
       annotations[-1].update_attribute(:state, "unassigned")
+      annotations[-1].update_attribute(:information, "80,10,270,630,u")
       redirect_to works_annotation_path
     else
       redirect_to works_annotation_path
@@ -100,7 +101,7 @@ class WorksController < ApplicationController
     redirect_to works_annotation_path
   end
 
-  #アノテーションされたあとの結果
+  #８分類されたあとの作業
   def action
 
     results = [
@@ -126,7 +127,7 @@ class WorksController < ApplicationController
       edited = Edited.new
       edited.user_id = params["user_id"].to_i
       edited.annotation_id = params["annotation_id"].to_i
-      edited.path = params["path"]
+      edited.path = [params["folder_name"],params["path"]].join("/")
       edited.information = results.join(",")
       edited.save
 

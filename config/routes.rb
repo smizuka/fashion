@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'admins/preprocess'
 
   get 'admins/post'
+  get 'admins/post2'
   get 'admins/avg'
   delete 'admins/destroyFile'
   delete 'admins/destroyUser'
