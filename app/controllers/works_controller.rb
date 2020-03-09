@@ -34,6 +34,7 @@ class WorksController < ApplicationController
 
     # user_state=[]
     annotations = Annotation.where(state: "unassigned")
+    annotations = annotations.sort
 
     #working状態の画像の数を取得。viewファイルの表示・非表示に関わる
     @count = annotations.count
