@@ -112,7 +112,7 @@ class AdminsController < ApplicationController
 
 
   def changeRowState
-    annotations = Annotation.where(state: "working")
+    annotations = Annotation.where.not(state: "unassigned")
 
     for annotation in annotations
       annotation.update_attribute(:state, "unassigned")
