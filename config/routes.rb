@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get 'admins/progress'
   get 'admins/preprocess'
 
+  get 'admins/changeRowState'
+
   get 'admins/post'
   get 'admins/post2'
   get 'admins/avg'

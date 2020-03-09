@@ -119,11 +119,8 @@ class WorksController < ApplicationController
     results.compact!
 
     if results.length != 8
-
       redirect_to works_main_path, info: 'チェック漏れがあります。'
-
     else
-
       edited = Edited.new
       edited.user_id = params["user_id"].to_i
       edited.annotation_id = params["annotation_id"].to_i
@@ -132,7 +129,6 @@ class WorksController < ApplicationController
       edited.save
 
       redirect_to works_main_path
-
     end
 
   end

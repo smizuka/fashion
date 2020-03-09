@@ -110,6 +110,18 @@ class AdminsController < ApplicationController
 
   end
 
+
+  def changeRowState
+    annotations = Annotation.where(state: "working")
+
+    for annotation in annotations
+      annotation.update_attribute(:state, "unassigned")
+      annotation.update_attribute(:information, "80,10,270,630")
+    end
+
+    redirect_to admins_main_path, success: 'アノテーション結果をリセットしました'
+  end
+
   def add_file
     folder_names = Annotation.select(:folder_name).distinct
     folder_names =folder_names.map{ |i| i["folder_name"] }
