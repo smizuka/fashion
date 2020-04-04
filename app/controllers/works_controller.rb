@@ -10,13 +10,23 @@ class WorksController < ApplicationController
     edited = Edited.where(user_id: current_user.id)
     #annotaionのidだけを取り出す。
     edited_annotation_id = edited.map{|v| v.annotation_id}
+
+
     #userの情報を配列に入れる(@countが0のときはerrorになるかもしれないので除外)
     for annotation in annotations
+
+
+      if annotation.path.include?("&")
+        split_str = annotation.split("&")
+        file_name = split_str[0]+CGI.unescape_html('&amp;')+split_str[1]
+      else
+        file_name = annotation
+      end
 
       if edited_annotation_id.include?(annotation.id)
 
       else
-        file_path = annotation.folder_name+"/"+annotation.path
+        file_path = annotation.folder_name+"/"+file_name
         file_path = "http://118.27.2.176/~mizukami/"+ file_path
         user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
       end
