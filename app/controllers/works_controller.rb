@@ -16,17 +16,17 @@ class WorksController < ApplicationController
     for annotation in annotations
 
 
-      if annotation.path.include?("&")
-        split_str = annotation.split("&")
-        file_name = split_str[0]+CGI.unescape_html('&amp;')+split_str[1]
-      else
-        file_name = annotation
-      end
+      # if annotation.path.include?("&")
+      #   split_str = annotation.split("&")
+      #   file_name = split_str[0]+CGI.unescape_html('&amp;')+split_str[1]
+      # else
+      #   file_name = annotation.path
+      # end
 
       if edited_annotation_id.include?(annotation.id)
 
       else
-        file_path = annotation.folder_name+"/"+file_name
+        file_path = annotation.folder_name+"/"+annotation.path
         file_path = "http://118.27.2.176/~mizukami/"+ file_path
         user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
       end

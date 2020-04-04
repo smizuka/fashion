@@ -390,7 +390,7 @@ var id = <%= @user_state[0] %>;
 var userId = <%= @user_state[1] %>;
 //ローカルの場合
 // var path = '/assets/'+;
-var path = `<%= @user_state[2] %>`;
+var path = `<%= @user_state[2].html_safe %>`;
 var info = [<%= @user_state[3] %>];
 
 // console.log("id", id);
