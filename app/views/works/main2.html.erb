@@ -1,0 +1,123 @@
+<% if @count!=0 %>
+
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="row mt-3">
+            <div class="col-4 offset-1">
+                <%= image_tag @user_state[2] ,size: '300x455'%>
+                <p> <%= @user_state[5] %> </p>
+            </div>
+            <div class=" col-6 offset-1 mt-1">
+                <h3 class="text-primary">全員版</h3>
+            <!-- <div class=" col-6 offset-2 card mt-3"> -->
+                <%= form_for :fashion, url: works_action2_path do |f| %>
+                    <table class="table table-striped mt-3">
+                      <tr class="thead-dark">
+                        <th class="text-center"></th>
+                        <th class="text-center">弱</th>
+                        <th class="text-center">やや弱</th>
+                        <th class="text-center">普通</th>
+                        <th class="text-center">やや強</th>
+                        <th class="text-center">強</th>
+                      </tr>
+                      <tr>
+                        <td class="text-left">1. エレガント</td>
+                        <td class="text-center"><%=f.radio_button :elegant, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :elegant, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :elegant, :"3" %></td>
+                        <td class="text-center"><%=f.radio_button :elegant, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :elegant, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">2. ロマンチック</td>
+                        <td class="text-center"><%=f.radio_button :romantic, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :romantic, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :romantic, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :romantic, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :romantic, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">3. エスニック</td>
+                        <td class="text-center"><%=f.radio_button :ethnic, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :ethnic, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :ethnic, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :ethnic, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :ethnic, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">4. カントリー</td>
+                        <td class="text-center"><%=f.radio_button :country, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :country, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :country, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :country, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :country, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">5. アクティブ</td>
+                        <td class="text-center"><%=f.radio_button :active, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :active, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :active, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :active, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :active, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">6.マニッシュ</td>
+                        <td class="text-center"><%=f.radio_button :mannish, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :mannish, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :mannish, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :mannish, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :mannish, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">7.フィーチャリズム</td>
+                        <td class="text-center"><%=f.radio_button :modern, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :modern, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :modern, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :modern, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :modern, :"5" %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">8.ソフィスティケート</td>
+                        <td class="text-center"><%=f.radio_button :sophisticate, :"1" %></td>
+                        <td class="text-center"><%=f.radio_button :sophisticate, :"2" %></td>
+                        <td class="text-center"><%=f.radio_button :sophisticate, :"3"%></td>
+                        <td class="text-center"><%=f.radio_button :sophisticate, :"4" %></td>
+                        <td class="text-center"><%=f.radio_button :sophisticate, :"5" %></td>
+                      </tr>
+                    </table>
+                    <div>
+                        <%= hidden_field_tag :user_id, @user_state[1] %>
+                        <%= hidden_field_tag :path, @user_state[5] %>
+                        <%= hidden_field_tag :folder_name, @user_state[4] %>
+                        <%= hidden_field_tag :annotation_id, @user_state[0] %>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 ml-4">
+                            <!-- 戻るの処理 -->
+                            <%= link_to('戻る', works_mainBack_path, {class: "btn btn-primary btn-block"}) %>
+                        </div>
+                        <div class="col-3 offset-1">
+                            <!-- リダイレクト処理 -->
+                            <%= link_to('クリア', works_main2_path, {class: "btn btn-primary btn-block"}) %>
+                        </div>
+                        <div class="col-3 offset-1">
+                            <%= f.submit '決定', class: 'btn btn-primary btn-block' %>
+                        </div>
+                    </div>
+                <!-- formタグの閉じ -->
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% else %>
+    <div id='footer'>
+            <div class="mt-2 ml-2">
+              <p class="text-default h5 mb-3">画像はありません</p>
+            </div>
+    </div>
+<% end %>
+
+
+

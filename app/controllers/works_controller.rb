@@ -39,6 +39,33 @@ class WorksController < ApplicationController
 
   end
 
+  #８分類するときの関数
+  def main2
+    user_state=[]
+    #アノテーションされた画像だけを取り出す
+    annotations = Annotation.where(state: "working")
+    #そのユーザーが取得した画像だけを取り出す
+    edited_annotation_id = Editedall.all.map{|v| v.annotation_id}
+
+    #userの情報を配列に入れる(@countが0のときはerrorになるかもしれないので除外)
+    for annotation in annotations
+
+      if edited_annotation_id.include?(annotation.id)
+
+      else
+        file_path = annotation.folder_name+"/"+annotation.path
+        file_path = "http://118.27.2.176/~mizukami/"+ file_path
+        user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
+      end
+    end
+
+    @count = user_state.length
+
+    @user_state = user_state[0]
+
+  end
+
+
    #枠アノテーションをするときの関数
   def annotation
 
@@ -112,7 +139,6 @@ class WorksController < ApplicationController
     redirect_to works_annotation_path
   end
 
-  #８分類されたあとの作業
   def action
 
     results = [
@@ -140,6 +166,39 @@ class WorksController < ApplicationController
       edited.save
 
       redirect_to works_main_path
+    end
+
+  end
+
+
+  #８分類されたあとの作業
+  def action2
+
+    results = [
+      params["fashion"]["elegant"],
+      params["fashion"]["romantic"],
+      params["fashion"]["ethnic"],
+      params["fashion"]["country"],
+      params["fashion"]["active"],
+      params["fashion"]["mannish"],
+      params["fashion"]["modern"],
+      params["fashion"]["sophisticate"]
+    ]
+
+    #nilを配列から削除する
+    results.compact!
+
+    if results.length != 8
+      redirect_to works_main2_path, info: 'チェック漏れがあります。'
+    else
+      edited = Editedall.new
+      edited.user_id = params["user_id"].to_i
+      edited.annotation_id = params["annotation_id"].to_i
+      edited.path = [params["folder_name"],params["path"]].join("/")
+      edited.information = results.join(",")
+      edited.save
+
+      redirect_to works_main2_path
     end
 
   end
