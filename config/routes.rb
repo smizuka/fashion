@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post 'works/action2'
   post 'works/trim'
   get 'works/mainBack'
+  get 'works/mainBack2'
   post 'works/annoBack'
   get 'works/annotation'
 

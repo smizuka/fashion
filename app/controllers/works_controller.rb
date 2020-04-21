@@ -45,7 +45,7 @@ class WorksController < ApplicationController
     #アノテーションされた画像だけを取り出す
     annotations = Annotation.where(state: "working")
     #そのユーザーが取得した画像だけを取り出す
-    edited_annotation_id = Editedall.all.map{|v| v.annotation_id}
+    edited_annotation_id = Classifier.all.map{|v| v.annotation_id}
 
     #userの情報を配列に入れる(@countが0のときはerrorになるかもしれないので除外)
     for annotation in annotations
@@ -170,6 +170,20 @@ class WorksController < ApplicationController
 
   end
 
+  #８分類でバックをしたとき
+  def mainBack2
+
+    #誰が作業済みしたかに関わらず、１つ戻る
+    class_id = Classifier.all
+
+    if class_id[-1] != nil
+      class_id[-1].destroy
+      redirect_to works_main2_path
+    else
+      redirect_to works_main2_path
+    end
+  end
+
 
   #８分類されたあとの作業
   def action2
@@ -191,7 +205,7 @@ class WorksController < ApplicationController
     if results.length != 8
       redirect_to works_main2_path, info: 'チェック漏れがあります。'
     else
-      edited = Editedall.new
+      edited = Classifier.new
       edited.user_id = params["user_id"].to_i
       edited.annotation_id = params["annotation_id"].to_i
       edited.path = [params["folder_name"],params["path"]].join("/")
