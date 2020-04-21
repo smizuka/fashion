@@ -181,6 +181,34 @@ class AdminsController < ApplicationController
   end
 
   #すべてのCSVデータを出力する
+  def post3
+    #admin以外のユーザーを取得する
+
+    editeds = Classifier.all
+    users = User.all
+
+    user_list={}
+    for user in users
+      user_list[user.id]=user.login_id
+    end
+
+    @edited =[]
+
+    editeds.each do | edited |
+      user_name = user_list[edited.user_id]
+      @edited.push([user_name, edited.path, edited.information])
+    end
+
+    #生データ
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_posts_csv(@edited, "8class_all.csv")
+      end
+    end
+  end
+
+  #すべてのCSVデータを出力する
   def post
     #admin以外のユーザーを取得する
     users = User.where.not(user_type: "admin")
@@ -199,11 +227,10 @@ class AdminsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do |csv|
-        send_posts_csv(@edited, "posts.csv")
+        send_posts_csv(@edited, "8class.csv")
       end
     end
   end
-
 
   #枠アノテーションの結果を出力する
   def post2
@@ -222,7 +249,7 @@ class AdminsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do |csv|
-        send_posts_csv(@edited, "posts2.csv")
+        send_posts_csv(@edited, "annotation.csv")
       end
     end
   end

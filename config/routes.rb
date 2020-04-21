@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get 'admins/post'
   get 'admins/post2'
+  get 'admins/post3'
   get 'admins/avg'
   delete 'admins/destroyFile'
   delete 'admins/destroyUser'
