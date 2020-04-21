@@ -43,7 +43,7 @@ class WorksController < ApplicationController
   def main2
     user_state=[]
     #アノテーションされた画像だけを取り出す
-    annotations = Annotation.where(state: "working")
+    annotations = Annotation.where(state: "working").select{|v| v.id > 1970}
     #そのユーザーが取得した画像だけを取り出す
     edited_annotation_id = Classifier.all.map{|v| v.annotation_id}
 
