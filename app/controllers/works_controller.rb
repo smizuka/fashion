@@ -39,23 +39,30 @@ class WorksController < ApplicationController
 
   end
 
-  #８分類するときの関数
+  #すべての８分類をする場所
   def main2
     user_state=[]
     #アノテーションされた画像だけを取り出す
     annotations = Annotation.where(state: "working").select{|v| v.id > 1970}
     #そのユーザーが取得した画像だけを取り出す
+
+    folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
+
     edited_annotation_id = Classifier.all.map{|v| v.annotation_id}
 
     #userの情報を配列に入れる(@countが0のときはerrorになるかもしれないので除外)
     for annotation in annotations
 
-      if edited_annotation_id.include?(annotation.id)
+      #フォルダ名のリストにある画像だけ表示する
+      if folder_list.include?(annotation.folder_name)
 
-      else
-        file_path = annotation.folder_name+"/"+annotation.path
-        file_path = "http://118.27.2.176/~mizukami/"+ file_path
-        user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
+        if edited_annotation_id.include?(annotation.id)
+        else
+          file_path = annotation.folder_name+"/"+annotation.path
+          file_path = "http://118.27.2.176/~mizukami/"+ file_path
+          user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
+        end
+
       end
     end
 
