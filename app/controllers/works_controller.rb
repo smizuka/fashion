@@ -78,8 +78,14 @@ class WorksController < ApplicationController
 
     # user_state=[]
     annotations = Annotation.where(state: "unassigned")
-    annotations = annotations.sort
 
+    folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
+
+    #フォルダに含まれるものだけを選択する
+    annotations = annotations.select{|v| folder_list.include?(v.folder_name)}
+
+    #並び替える。
+    annotations = annotations.sort
     #working状態の画像の数を取得。viewファイルの表示・非表示に関わる
     @count = annotations.count
 
