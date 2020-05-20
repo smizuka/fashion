@@ -39,11 +39,12 @@ class WorksController < ApplicationController
 
   end
 
-  #すべての８分類をする場所
+  #作業者に関係なく全員で８分類をするページ
   def main2
     user_state=[]
-    #アノテーションされた画像だけを取り出す
-    annotations = Annotation.where(state: "working").select{|v| v.id > 1970}
+    #枠アノテーションされた画像だけを取り出す
+    # annotations = Annotation.where(state: "working").select{|v| v.id > 1970}
+    annotations = Annotation.where(state: "working")
     #そのユーザーが取得した画像だけを取り出す
 
     folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
@@ -55,7 +56,7 @@ class WorksController < ApplicationController
 
       #フォルダ名のリストにある画像だけ表示する
       if folder_list.include?(annotation.folder_name)
-
+        #８分類終わってない画像だけ表示する
         if edited_annotation_id.include?(annotation.id)
         else
           file_path = annotation.folder_name+"/"+annotation.path
@@ -223,7 +224,14 @@ class WorksController < ApplicationController
       edited.annotation_id = params["annotation_id"].to_i
       edited.path = [params["folder_name"],params["path"]].join("/")
       edited.information = results.join(",")
+
+      print("-------------------------------")
+      print(edited)
+
       edited.save
+
+      print("-------------------------------")
+      print(edited)
 
       redirect_to works_main2_path
     end
