@@ -4,5 +4,5 @@ class Classifier < ApplicationRecord
     validates :path, presence: true
     validates :information, presence: true
 
-    belongs_to :user
+    # belongs_to :user
 end
