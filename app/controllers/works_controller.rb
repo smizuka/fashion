@@ -224,9 +224,12 @@ class WorksController < ApplicationController
       edited.annotation_id = params["annotation_id"].to_i
       edited.path = [params["folder_name"],params["path"]].join("/")
       edited.information = results.join(",")
-
       print("-------------------------------")
-      print(edited)
+      print(params["user_id"].to_i)
+      print(params["annotation_id"].to_i)
+      print([params["folder_name"],params["path"]].join("/"))
+      print(results.join(","))
+      print("-------------------------------")
 
       edited.save
 
