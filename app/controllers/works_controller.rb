@@ -43,11 +43,11 @@ class WorksController < ApplicationController
   def main2
     user_state=[]
     #枠アノテーションされた画像だけを取り出す
-    # annotations = Annotation.where(state: "working").select{|v| v.id > 1970}
-    annotations = Annotation.where(state: "working")
+    annotations = Annotation.where(state: "working").select{|v| v.id > 1970}
+    # annotations = Annotation.where(state: "working")
     #そのユーザーが取得した画像だけを取り出す
 
-    # folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
+    folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
 
     edited_annotation_id = Classifier.all.map{|v| v.annotation_id}
 
@@ -55,7 +55,7 @@ class WorksController < ApplicationController
     for annotation in annotations
 
       #フォルダ名のリストにある画像だけ表示する
-      # if folder_list.include?(annotation.folder_name)
+      if folder_list.include?(annotation.folder_name)
         #８分類終わってない画像だけ表示する
         if edited_annotation_id.include?(annotation.id)
         else
@@ -64,7 +64,7 @@ class WorksController < ApplicationController
           user_state.push([annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path])
         end
 
-      # end
+      end
     end
 
     @count = user_state.length
