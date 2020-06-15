@@ -47,8 +47,8 @@ class WorksController < ApplicationController
     # annotations = Annotation.where(state: "working")
     #そのユーザーが取得した画像だけを取り出す
 
-    folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
-    # folder_list=["futurism_horiuchi_mask(1)","modern_mask(1)"]
+    # folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
+    folder_list=["futurism_horiuchi_mask(1)","modern_mask(1)"]
 
     edited_annotation_id = Classifier.all.map{|v| v.annotation_id}
 
@@ -83,8 +83,8 @@ class WorksController < ApplicationController
     # user_state=[]
     annotations = Annotation.where(state: "unassigned")
 
-    folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
-    # folder_list=["futurism_horiuchi_mask(1)","modern_mask(1)"]
+    # folder_list=["active_mask(1)","romantic_mask(1)","country_mask(1)","sophisticated_mask(1)","elegant_mask(1)","ethnic_mask(1)","modern_mask(1)","mannish_mask(1)"]
+    folder_list=["futurism_horiuchi_mask(1)","modern_mask(1)"]
 
     #フォルダに含まれるものだけを選択する
     annotations = annotations.select{|v| folder_list.include?(v.folder_name)}
