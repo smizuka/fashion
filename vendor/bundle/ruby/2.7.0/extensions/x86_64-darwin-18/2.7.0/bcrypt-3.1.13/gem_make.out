@@ -1,5 +1,5 @@
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/bcrypt-3.1.13/ext/mri
-/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20200208-29180-vlhgim.rb extconf.rb
+/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20201209-64040-1oscrhc.rb extconf.rb
 creating Makefile
 
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/bcrypt-3.1.13/ext/mri
@@ -32,4 +32,4 @@ linking shared-object bcrypt_ext.bundle
 
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/bcrypt-3.1.13/ext/mri
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 bcrypt_ext.bundle ./.gem.20200208-29180-oiotup
+/usr/bin/install -c -m 0755 bcrypt_ext.bundle ./.gem.20201209-64040-wta9mq

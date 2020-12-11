@@ -11,13 +11,15 @@ class Annotation < ApplicationRecord
 
     def self.import(file)
         require "csv"
-        CSV.foreach(file.path, headers: true, encoding: 'Shift_JIS:UTF-8') do |row|
-            Annotation.create(
+        CSV.foreach(file.path, headers: true, encoding: 'UTF-8') do |row|
+        # CSV.foreach(file.path, headers: true, encoding: 'Shift_JIS:UTF-8') do |row|
+            !Annotation.create(
               path: row['path'],
               category_id: row['category_id'].to_i,
               folder_name: row['folder_name'],
               information: row['information'],
-              state: row['state'].to_i,
+            #   state: row['state'].to_i,
+              state: 2,
             )
         end
     end

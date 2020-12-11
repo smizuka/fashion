@@ -1,5 +1,5 @@
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/sassc-2.2.1/ext
-/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20200208-27789-15l33cu.rb extconf.rb
+/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20201209-64040-egf19y.rb extconf.rb
 creating Makefile
 
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/sassc-2.2.1/ext
@@ -72,4 +72,4 @@ linking shared-object sassc/libsass.bundle
 
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/sassc-2.2.1/ext
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 libsass.bundle ./.gem.20200208-27789-1nfumw4/sassc
+/usr/bin/install -c -m 0755 libsass.bundle ./.gem.20201209-64040-e9v7po/sassc

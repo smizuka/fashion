@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get 'works/main'
   get 'works/main2'
+  get 'works/pass'
   post 'works/action'
   post 'works/action2'
   post 'works/trim'

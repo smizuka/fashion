@@ -92,16 +92,20 @@
                         <%= hidden_field_tag :annotation_id, @user_state[0] %>
                     </div>
                     <div class="row">
-                        <div class="col-3 ml-4">
+                        <div class="col-3">
                             <!-- 戻るの処理 -->
                             <%= link_to('戻る', works_mainBack2_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
-                        <div class="col-3 offset-1">
+                        <div class="col-3">
                             <!-- リダイレクト処理 -->
                             <%= link_to('クリア', works_main2_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
-                        <div class="col-3 offset-1">
+                        <div class="col-3">
                             <%= f.submit '決定', class: 'btn btn-primary btn-block' %>
+                        </div>
+                        <div class="col-3">
+                            <!-- リダイレクト処理 -->
+                            <%= link_to('パス', works_main2_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
                     </div>
                 <!-- formタグの閉じ -->

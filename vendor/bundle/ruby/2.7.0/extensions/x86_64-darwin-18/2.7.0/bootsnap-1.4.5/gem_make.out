@@ -1,5 +1,5 @@
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.4.5/ext/bootsnap
-/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20200207-97909-pcpmk2.rb extconf.rb
+/Users/mizukamisatoru/.rbenv/versions/2.7.0/bin/ruby -I /Users/mizukamisatoru/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20201209-64040-hlqwzx.rb extconf.rb
 creating Makefile
 
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.4.5/ext/bootsnap
@@ -19,4 +19,4 @@ linking shared-object bootsnap/bootsnap.bundle
 
 current directory: /Users/mizukamisatoru/Desktop/techboost/fashion/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.4.5/ext/bootsnap
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20200207-97909-1n542ck/bootsnap
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20201209-64040-s38g0z/bootsnap
