@@ -5,15 +5,14 @@ class WorksController < ApplicationController
   #作業者に関係なく全員で８分類をするページ
   def main
 
-    annotation = Annotation.where(state: "working")[0]
-    @count = [ annotation ].count
-
+    annotations = Annotation.where(state: "working")
+    @count = annotations.count
+    #一番最初の一枚を取得する
+    annotation = annotations[0]
     if @count != 0
       file_path = annotation.folder_name+"/"+annotation.path
       file_path = "https://nadera-annotation.s3-ap-northeast-1.amazonaws.com/"+ file_path
       @user_state=[annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path]
-    else
-      @user_state=[]
     end
 
   end
