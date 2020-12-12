@@ -6,12 +6,15 @@ class WorksController < ApplicationController
   def main
 
     annotation = Annotation.where(state: "working")[0]
-    file_path = annotation.folder_name+"/"+annotation.path
-    file_path = "https://nadera-annotation.s3-ap-northeast-1.amazonaws.com/"+ file_path
-    @user_state=[annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path]
-
     @count = [ annotation ].count
 
+    if @count != 0
+      file_path = annotation.folder_name+"/"+annotation.path
+      file_path = "https://nadera-annotation.s3-ap-northeast-1.amazonaws.com/"+ file_path
+      @user_state=[annotation.id, current_user.id, file_path, annotation.information, annotation.folder_name, annotation.path]
+    else
+      @user_state=[]
+    end
 
   end
 
