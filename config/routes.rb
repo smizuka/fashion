@@ -7,13 +7,13 @@ Rails.application.routes.draw do
   get 'sessions/update'
 
   get 'works/main'
-  get 'works/main2'
+  # get 'works/main2'
   get 'works/pass'
   post 'works/action'
-  post 'works/action2'
+  # post 'works/action2'
   post 'works/trim'
   get 'works/mainBack'
-  get 'works/mainBack2'
+  # get 'works/mainBack2'
   post 'works/annoBack'
   get 'works/annotation'
 

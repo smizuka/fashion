@@ -26,38 +26,32 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <% if logged_in? %>
+        <p class="navbar-brand"><%= current_user.name %>さん</p>
+    <% else %>
+        <a class="navbar-brand " href="#">
+            ファッション分類
+        </a>
+    <% end %>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navmenu2a" aria-controls="navmenu2a" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navmenu2a" style="">
+    <div class="navbar-nav">
+              <% if logged_in? %>
+                <%= link_to("ファイル管理", admins_main_path, {class: "nav-item nav-link text-white"}) %>
 
-        <div class="navbar-nav mr-auto">
-                <% if logged_in? %>
-                    <p class="navbar-brand"><%= current_user.name %>さん</p>
-
-                <% else %>
-                    <a class="navbar-brand " href="#">
-                        ファッション分類
-                    </a>
-                <% end %>
-        </div>
-        <div class="navbar-nav">
-            <% if logged_in? %>
-                <%= link_to("ファイル管理", admins_main_path, {class: "nav-item nav-link text-white btn btn-outline-secondary h5"}) %>
-
-                <%= link_to("８分類_全員", works_main2_path, {class: "ml-2 nav-item nav-link text-white btn btn-outline-secondary h5"}) %>
-
-                <%#= link_to("８分類", works_main_path, {class: "ml-2 nav-item nav-link text-white btn btn-outline-secondary h5"}) %>
-
-                <%#= link_to("枠アノテーション", works_annotation_path, {class: "ml-2 nav-item nav-link text-white btn btn-outline-secondary h5"}) %>
+                <%= link_to("８分類_全員", works_main_path, {class: "ml-2 nav-item nav-link text-white"}) %>
 
                 <%= link_to logout_path,method: :delete do %>
-                    <p class="ml-2 nav-item nav-link text-white btn btn-outline-secondary h5">
+                    <p class="ml-2 nav-item nav-link text-white ">
                         ログアウト
                     </p>
                 <% end %>
             <% end %>
-        </div>
+    </div>
+    </div>
     </nav>
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>" role="alert"><%= value %></div>
-    <% end %>
 
     <%= yield %>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

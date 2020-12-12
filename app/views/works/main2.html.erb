@@ -8,9 +8,8 @@
                 <p> <%= @user_state[5] %> </p>
             </div>
             <div class=" col-6 offset-1 mt-1">
-                <h3 class="text-primary">全員版</h3>
             <!-- <div class=" col-6 offset-2 card mt-3"> -->
-                <%= form_for :fashion, url: works_action2_path do |f| %>
+                <%= form_for :fashion, url: works_action_path do |f| %>
                     <table class="table table-striped mt-3">
                       <tr class="thead-dark">
                         <th class="text-center"></th>
@@ -92,20 +91,16 @@
                         <%= hidden_field_tag :annotation_id, @user_state[0] %>
                     </div>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-3 ml-4">
                             <!-- 戻るの処理 -->
-                            <%= link_to('戻る', works_mainBack2_path, {class: "btn btn-primary btn-block"}) %>
+                            <%= link_to('戻る', works_mainBack_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 offset-1">
                             <!-- リダイレクト処理 -->
-                            <%= link_to('クリア', works_main2_path, {class: "btn btn-primary btn-block"}) %>
+                            <%= link_to('クリア', works_main_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 offset-1">
                             <%= f.submit '決定', class: 'btn btn-primary btn-block' %>
-                        </div>
-                        <div class="col-3">
-                            <!-- リダイレクト処理 -->
-                            <%= link_to('パス', works_main2_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
                     </div>
                 <!-- formタグの閉じ -->

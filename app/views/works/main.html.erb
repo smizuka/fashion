@@ -1,13 +1,13 @@
 <% if @count!=0 %>
 
-<div class="row">
+<div class="row mb-3">
     <div class="col-10 offset-1">
         <div class="row mt-3">
-            <div class="col-4 offset-1">
+            <div class="col-12 col-md-4 offset-md-1">
                 <%= image_tag @user_state[2] ,size: '300x455'%>
                 <p> <%= @user_state[5] %> </p>
             </div>
-            <div class=" col-6 offset-1 mt-1">
+            <div class=" col-12 col-md-6 offset-md-1 mt-1">
             <!-- <div class=" col-6 offset-2 card mt-3"> -->
                 <%= form_for :fashion, url: works_action_path do |f| %>
                     <table class="table table-striped mt-3">
@@ -91,18 +91,25 @@
                         <%= hidden_field_tag :annotation_id, @user_state[0] %>
                     </div>
                     <div class="row">
-                        <div class="col-3 ml-4">
+                        <div class="col-3">
                             <!-- 戻るの処理 -->
                             <%= link_to('戻る', works_mainBack_path, {class: "btn btn-primary btn-block"}) %>
                         </div>
-                        <div class="col-3 offset-1">
+                        <div class="col-3">
                             <!-- リダイレクト処理 -->
-                            <%= link_to('クリア', works_main_path, {class: "btn btn-primary btn-block"}) %>
+                            <%#= link_to('クリア', works_main_path, {class: "btn btn-primary btn-block"}) %>
+                            <button id="clear" class="btn btn-primary btn-block">
+                              クリア
+                            </button>
                         </div>
-                        <div class="col-3 offset-1">
+                        <div class="col-3">
                             <%= f.submit '決定', class: 'btn btn-primary btn-block' %>
                         </div>
+                        <div class="col-3">
+                            <%= link_to "パス", works_pass_path(annotation_id: @user_state[0]), class:"btn btn-primary btn-block" %>
+                        </div>
                     </div>
+
                 <!-- formタグの閉じ -->
                 <% end %>
             </div>
@@ -117,6 +124,13 @@
             </div>
     </div>
 <% end %>
+
+<script>
+  document.getElementById("clear").onclick = function() {
+  // ここに#buttonをクリックしたら発生させる処理を記述する
+  location.href="/works/main";
+  };
+</script>
 
 
 
