@@ -4,7 +4,6 @@ class WorksController < ApplicationController
 
   #作業者に関係なく全員で８分類をするページ
   def main
-
     annotations = Annotation.where(state: "working")
     @count = annotations.count
     #一番最初の一枚を取得する
@@ -23,7 +22,7 @@ class WorksController < ApplicationController
     annotations = Annotation.where(state: "end").order(updated_at: :desc).limit(1)
     classifies = Classifier.order(updated_at: :desc).limit(1)
     # binding.pry
-    if classifies != nil
+    if classifies.count != 0
       ActiveRecord::Base.transaction do
         classifies[0].destroy
         annotations[0].update_attribute(:state, "working")
